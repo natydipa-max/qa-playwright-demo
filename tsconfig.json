@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@pages/*": ["src/ui/pages/*"],
+      "@components/*": ["src/ui/components/*"],
+
+      "@constants/*": ["src/core/constants/*"],
+      "@fixtures/*": ["src/core/fixtures/*"],
+      "@helpers/*": ["src/core/helpers/*"],
+      "@utils/*": ["src/core/utils/*"],
+      "@types/*": ["src/core/types/*"]
+    },
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "src",
+    "tests",
+    "playwright.config.ts"
+  ]
+}
