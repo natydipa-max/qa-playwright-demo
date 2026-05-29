@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from "@playwright/test";
 
 export abstract class BasePage {
   readonly page: Page;
@@ -22,6 +22,6 @@ export abstract class BasePage {
   }
 
   async goto(route: string) {
-  await this.page.goto(route);
+    await this.page.goto(route);
   }
 }

@@ -15,7 +15,7 @@
       "@fixtures/*": ["src/core/fixtures/*"],
       "@helpers/*": ["src/core/helpers/*"],
       "@utils/*": ["src/core/utils/*"],
-      "@types/*": ["src/core/types/*"]
+      "@model/*": ["src/core/types/*"]
     },
 
     "resolveJsonModule": true,
@@ -24,9 +24,5 @@
     "skipLibCheck": true
   },
 
-  "include": [
-    "src",
-    "tests",
-    "playwright.config.ts"
-  ]
+  "include": ["src", "tests", "playwright.config.ts"]
 }

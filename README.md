@@ -1,8 +1,6 @@
 # Playwright Automation Framework
 
-Senior-style QA Automation framework built with 
-:contentReference[oaicite:0]{index=0} 
-and TypeScript following scalable and maintainable automation best practices.
+Enterprise-style QA Automation framework built with Playwright + TypeScript
 
 ---
 
@@ -39,7 +37,7 @@ src/
 │   ├── fixtures/
 │   ├── helpers/
 │   ├── utils/
-│   └── types/
+├── types/
 │
 ├── ui/
 │   ├── components/
@@ -56,15 +54,22 @@ tests/
 
 # Current Test Coverage
 
-## Login
-
-Implemented scenarios:
+## Authentication
 
 - Successful login
-- Locked user validation
 - Invalid credentials
+- Locked user validation
 - Required username validation
 - Required password validation
+- Logout flow
+
+## Inventory
+
+- Inventory page validation
+- Product sorting
+- Add/remove products to cart
+- Multiple cart selections
+- Product card validations
 
 ---
 
@@ -73,6 +78,12 @@ Implemented scenarios:
 ## Page Object Model (POM)
 
 UI interactions are encapsulated into reusable page objects to improve readability and maintainability.
+
+---
+
+## Reusable UI Components
+
+Reusable UI components were introduced to avoid duplicated selectors and improve maintainability as the application grows.
 
 ---
 
@@ -94,7 +105,7 @@ Constants, routes, UI texts, and fixtures are separated from test logic to impro
 
 ---
 
-## Stable Synchronization
+## Reliable Synchronization Strategy
 
 `Promise.all()` is used for navigation synchronization in order to prevent flaky tests and race conditions during page transitions.
 
@@ -103,12 +114,34 @@ Example:
 ```ts
 await Promise.all([
   page.waitForURL(new RegExp(ROUTES.INVENTORY)),
-  loginPage.login(
-    USERS.STANDARD.username,
-    USERS.STANDARD.password
-  )
+  loginPage.login(USERS.STANDARD.username, USERS.STANDARD.password),
 ]);
 ```
+
+---
+
+# Design Principles
+
+- Composition over duplication
+- Encapsulation of UI behavior
+- Stable selectors using data-test attributes
+- Reusable assertions
+- Clear separation between pages and components
+- Maintainable and readable test APIs
+
+---
+
+# Example Test Flow
+
+```ts
+const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
+
+await backpackItem.addToCart();
+
+await inventoryPage.header.assertCartBadgeCount(1);
+```
+
+Tests interact with reusable page and component APIs instead of raw selectors, improving readability and maintainability.
 
 ---
 
@@ -148,18 +181,15 @@ npx playwright test --headed
 
 # Future Improvements
 
-Planned next steps for the framework:
-
-- Inventory page
-- Reusable UI components
-- Cart flow automation
-- Checkout flow automation
-- API testing
-- Custom fixtures
-- Authentication storage state
+- API testing layer
+- Custom Playwright fixtures
+- Authentication via storage state
+- CI/CD integration with GitHub Actions
+- Docker execution support
+- Test tagging strategy
+- Cross-browser parallel execution optimization
 - Reporting integration
-- CI/CD with GitHub Actions
-- ESLint and Prettier integration
+- Visual regression testing
 
 ---
 

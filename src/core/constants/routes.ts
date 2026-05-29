@@ -1,5 +1,5 @@
 export const ROUTES = {
-  LOGIN: '/',
-  INVENTORY: '/inventory.html',
-  CART: '/cart.html'
+  LOGIN: "/",
+  INVENTORY: "/inventory.html",
+  CART: "/cart.html",
 };
