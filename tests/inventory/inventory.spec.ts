@@ -1,4 +1,3 @@
-import { InventoryPage } from "@pages/InventoryPage";
 import { test, expect } from "../fixtures/pages";
 
 test.use({
@@ -16,39 +15,48 @@ test.describe("Inventory Page", () => {
 
     await inventoryPage.waitForPageLoaded();
 
-    const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
+    const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
     await backpackItem.waitForComponentLoaded();
 
-    //amount of products should be 6
+    // amount of products should be 6
     await inventoryPage.inventoryContainer.assertItemsCount(6);
 
-    //product should be sorted by default from A-Z
-    const productNames = await inventoryPage.getInventoryItemNames();
+    const names = await inventoryPage.inventoryContainer.getAllNames();
 
-    const sortedNames = [...productNames].sort();
+     // sanity check: no empty products
+    expect(names.every(n => n.length > 0)).toBeTruthy();
+  });
 
-    expect(productNames).toEqual(sortedNames);
+  test('inventory default sorting is alphabetical A-Z', async ({ inventoryPage }) => {
+
+    await inventoryPage.waitForPageLoaded();
+
+    const names = await inventoryPage.inventoryContainer.getAllNames();
+
+    const sorted = [...names].sort((a, b) => a.localeCompare(b));
+
+    expect(names).toEqual(sorted);
   });
 
   test('user can add product to cart', async ({ inventoryPage }) => {
 
-    const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
+    const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
 
     await backpackItem.addToCart();
 
-    await backpackItem.assertAddedToCart();
-
     await inventoryPage.header.assertCartBadgeCount(1);
+
+    await backpackItem.expectAddedToCart();
   });
 
   test('user can remove product from cart', async ({ inventoryPage }) => {
-    const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
+    const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
 
     await backpackItem.addToCart();
 
     await backpackItem.removeFromCart();
 
-    await backpackItem.assertRemovedFromCart();
+    await backpackItem.expectRemovedFromCart();
 
     await inventoryPage.header.assertCartBadgeHidden();
   });
@@ -56,18 +64,18 @@ test.describe("Inventory Page", () => {
   test('products should be sorted alphabetically Z-A', async ({ inventoryPage }) => {
     await inventoryPage.sortProducts("za");
 
-    const productNames = await inventoryPage.inventoryContainer.getItemNames();
+    const names = await inventoryPage.inventoryContainer.getAllNames();
 
-    const sortedNames = [...productNames].sort((a, b) => b.localeCompare(a));
+    const sortedNames = [...names].sort((a, b) => b.localeCompare(a));
 
-    expect(productNames).toEqual(sortedNames);
+    expect(names).toEqual(sortedNames);
   });
 
-  test('user can sort products by price low to high', async ({ inventoryPage }) => {
+  test('products can be sorted by price ascending', async ({ inventoryPage }) => {
 
     await inventoryPage.sortProducts("lohi");
 
-    const prices = await inventoryPage.inventoryContainer.getItemPrices();
+    const prices = await inventoryPage.inventoryContainer.getAllPrices();
 
     const sortedPrices = [...prices].sort((a, b) => a - b);
 
@@ -75,11 +83,11 @@ test.describe("Inventory Page", () => {
   });
 
   test('user can add multiple products to cart', async ({ inventoryPage }) => {
-    const backpackItem = inventoryPage.inventoryContainer.getInventoryItem(
+    const backpackItem = inventoryPage.inventoryContainer.getCard(
       "Sauce Labs Backpack",
     );
 
-    const bikeLightItem = inventoryPage.inventoryContainer.getInventoryItem(
+    const bikeLightItem = inventoryPage.inventoryContainer.getCard(
       "Sauce Labs Bike Light",
     );
 
@@ -87,22 +95,22 @@ test.describe("Inventory Page", () => {
 
     await bikeLightItem.addToCart();
 
-    await backpackItem.assertAddedToCart();
-
-    await bikeLightItem.assertAddedToCart();
-
     await inventoryPage.header.assertCartBadgeCount(2);
+
+    await backpackItem.expectAddedToCart();
+
+    await bikeLightItem.expectAddedToCart();
   });
 
-  test('user can remove one product from multiple selected items', async ({
+  test('removing one item preserves remaining cart state', async ({
     inventoryPage
   }) => {
 
-    const backpackItem = inventoryPage.inventoryContainer.getInventoryItem(
+    const backpackItem = inventoryPage.inventoryContainer.getCard(
       "Sauce Labs Backpack",
     );
 
-    const bikeLightItem = inventoryPage.inventoryContainer.getInventoryItem(
+    const bikeLightItem = inventoryPage.inventoryContainer.getCard(
       "Sauce Labs Bike Light",
     );
 
@@ -112,10 +120,10 @@ test.describe("Inventory Page", () => {
 
     await backpackItem.removeFromCart();
 
-    await backpackItem.assertRemovedFromCart();
-
-    await bikeLightItem.assertAddedToCart();
-
     await inventoryPage.header.assertCartBadgeCount(1);
+
+    await backpackItem.expectRemovedFromCart();
+
+    await bikeLightItem.expectAddedToCart();
   });
 });

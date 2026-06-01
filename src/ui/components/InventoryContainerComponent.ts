@@ -1,56 +1,62 @@
 import { Locator, expect } from "@playwright/test";
-import { InventoryItemComponent } from "./InventoryItemComponent";
+import { InventoryCardComponent } from "./InventoryCardComponent";
 
 export class InventoryContainerComponent {
   readonly root: Locator;
-  readonly inventoryItems: Locator;
+  readonly cards: Locator;
 
   constructor(root: Locator) {
     this.root = root;
-    this.inventoryItems = root.locator('[data-test="inventory-item"]');
+    this.cards = root.locator('[data-test="inventory-item"]');
   }
 
   async waitForComponentLoaded() {
     await expect(this.root).toBeVisible();
-    await expect(this.inventoryItems.first()).toBeVisible();
+    await expect(this.cards.first()).toBeVisible();
   }
 
-  getInventoryItem(name: string) {
-    const item = this.inventoryItems.filter({
-      hasText: name,
-    });
-
-    return new InventoryItemComponent(item);
-  }
-  async getItemNames() {
-    const items = await this.inventoryItems.all();
-
-    const names = [];
-
-    for (const item of items) {
-      const inventoryItem = new InventoryItemComponent(item);
-
-      names.push(await inventoryItem.getName());
-    }
-
-    return names;
+  getCard(name: string): InventoryCardComponent {
+    return new InventoryCardComponent(
+      this.cards.filter({ hasText: name })
+    );
   }
 
-  async getItemPrices() {
-    const items = await this.inventoryItems.all();
+  async getAllCards(): Promise<InventoryCardComponent[]> {
+  const items = await this.cards.all();
 
-    const prices = [];
+  return items.map(
+    (item) => new InventoryCardComponent(item)
+  );
+}
 
-    for (const item of items) {
-      const inventoryItem = new InventoryItemComponent(item);
+  async getAllNames(): Promise<string[]> {
+  const count = await this.cards.count();
 
-      prices.push(await inventoryItem.getPrice());
-    }
+  const names: string[] = [];
 
-    return prices;
+  for (let i = 0; i < count; i++) {
+    const card = new InventoryCardComponent(this.cards.nth(i));
+    names.push(await card.getName());
   }
+
+  return names;
+}
+
+  async getAllPrices(): Promise<number[]> {
+  const count = await this.cards.count();
+
+  const prices: number[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const card = new InventoryCardComponent(this.cards.nth(i));
+    prices.push(await card.getPrice());
+  }
+
+  return prices;
+}
+
 
   async assertItemsCount(expectedCount: number) {
-    await expect(this.inventoryItems).toHaveCount(expectedCount);
+    await expect(this.cards).toHaveCount(expectedCount);
   }
 }

@@ -12,8 +12,6 @@ export const test = base.extend<Pages>({
     const inventoryPage =
       new InventoryPage(page);
 
-    await inventoryPage.goto();
-
     await use(inventoryPage);
   },
 });

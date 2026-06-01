@@ -24,8 +24,8 @@ The goal is not only to automate tests, but also to demonstrate framework design
 
 # Tech Stack
 
-- Playwright
-- TypeScript
+- Playwright Test Runner
+- TypeScript (strict mode)
 - Node.js
 - GitHub Actions
 
@@ -88,7 +88,26 @@ UI interactions are encapsulated into reusable page objects to improve readabili
 
 ## Reusable UI Components
 
-Reusable UI components were introduced to avoid duplicated selectors and improve maintainability as the application grows.
+UI is modeled using a Card-based architecture:
+
+- InventoryCardComponent represents a single product entity
+- InventoryContainerComponent manages collections of cards
+
+---
+
+## Card-Based UI Model
+
+The framework uses a Card-based model instead of data-extraction utilities.
+
+Each product is represented as an InventoryCardComponent, and interactions are performed at the entity level instead of extracting raw DOM data.
+
+---
+
+## Collection Management Pattern
+
+The InventoryContainerComponent is responsible for managing collections of UI elements, not for extracting or transforming data.
+
+Data extraction is performed through Card-level abstractions.
 
 ---
 
@@ -147,6 +166,8 @@ This keeps tests concise, reduces setup duplication, and improves readability.
 
 - Composition over duplication
 - Encapsulation of UI behavior through Page Objects and Components
+- Card-based UI modeling for domain clarity
+- Container as collection manager (not data service)
 - Stable selectors using data-test attributes
 - Clear separation between test logic, page objects, and UI components
 - Reusable assertions and test utilities
@@ -159,7 +180,7 @@ This keeps tests concise, reduces setup duplication, and improves readability.
 # Example Test Flow
 
 ```ts
-const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
+const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
 
 await backpackItem.addToCart();
 

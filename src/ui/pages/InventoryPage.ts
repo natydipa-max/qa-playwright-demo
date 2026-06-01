@@ -7,7 +7,7 @@ import { BaseAuthenticatedPage } from "./BaseAuthenticatedPage";
 import { InventoryContainerComponent } from "@components/InventoryContainerComponent";
 
 import { SortOption } from "src/types/SortOption";
-import { InventoryItemComponent } from "@components/InventoryItemComponent";
+import { InventoryCardComponent } from "@components/InventoryCardComponent";
 import { ROUTES } from "@constants/routes";
 
 export class InventoryPage extends BaseAuthenticatedPage {
@@ -50,19 +50,4 @@ export class InventoryPage extends BaseAuthenticatedPage {
     await this.productSortSelect.selectOption(sortOption);
   }
 
-  getInventoryItem(itemName: string): InventoryItemComponent {
-    return this.inventoryContainer.getInventoryItem(itemName);
-  }
-
-  async getInventoryItemNames() {
-    return await this.inventoryContainer.getItemNames();
-  }
-
-  async getInventoryItemPrices() {
-    return await this.inventoryContainer.getItemPrices();
-  }
-
-  async assertInventoryItemsCount(expectedCount: number) {
-    await this.inventoryContainer.assertItemsCount(expectedCount);
-  }
 }
