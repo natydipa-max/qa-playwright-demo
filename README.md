@@ -24,9 +24,10 @@ The goal is not only to automate tests, but also to demonstrate framework design
 
 # Tech Stack
 
+- Playwright
 - TypeScript
 - Node.js
-- :contentReference[oaicite:1]{index=1}
+- GitHub Actions
 
 ---
 
@@ -47,9 +48,11 @@ src/
 │
 tests/
 ├── auth/
-├── cart/
-├── checkout/
-└── inventory/
+├── inventory/
+├── fixtures/
+│   └── pages.ts
+└── setup/
+    └── auth.setup.ts
 ```
 
 ---
@@ -122,14 +125,34 @@ await Promise.all([
 
 ---
 
+## Storage State Authentication
+
+Authentication is handled using Playwright Storage State.
+
+A dedicated setup project performs the login once and stores the authenticated session, allowing tests to start already authenticated without repeating UI login steps.
+
+This reduces execution time and keeps tests focused on business scenarios instead of authentication flows.
+
+---
+
+## Custom Playwright Fixtures
+
+Custom fixtures are used to provide page objects already initialized and ready to use.
+
+This keeps tests concise, reduces setup duplication, and improves readability.
+
+---
+
 # Design Principles
 
 - Composition over duplication
-- Encapsulation of UI behavior
+- Encapsulation of UI behavior through Page Objects and Components
 - Stable selectors using data-test attributes
-- Reusable assertions
-- Clear separation between pages and components
-- Maintainable and readable test APIs
+- Clear separation between test logic, page objects, and UI components
+- Reusable assertions and test utilities
+- Type-safe test APIs with TypeScript
+- Authentication isolated from business scenarios using Storage State
+- Maintainable and scalable test architecture
 
 ---
 
@@ -184,9 +207,6 @@ npx playwright test --headed
 # Future Improvements
 
 - API testing layer
-- Custom Playwright fixtures
-- Authentication via storage state
-- CI/CD integration with GitHub Actions
 - Docker execution support
 - Test tagging strategy
 - Cross-browser parallel execution optimization
