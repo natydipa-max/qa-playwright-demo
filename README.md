@@ -1,6 +1,8 @@
 # Playwright Automation Framework
 
-Enterprise-style QA Automation framework built with Playwright + TypeScript
+![Playwright Tests](https://github.com/natydipa-max/qa-playwright-demo/actions/workflows/playwright.yml/badge.svg)
+
+Enterprise-style QA Automation framework built with Playwright and TypeScript.
 
 ---
 
