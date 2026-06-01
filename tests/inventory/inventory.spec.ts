@@ -1,14 +1,18 @@
-import { loginAsStandardUser } from "@helpers/auth";
 import { InventoryPage } from "@pages/InventoryPage";
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../fixtures/pages";
+
+test.use({
+  storageState: "playwright/.auth/standard-user.json",
+});
 
 test.describe("Inventory Page", () => {
-  test.beforeEach(async ({ page }) => {
-    await loginAsStandardUser(page);
+
+  test.beforeEach(async ({ inventoryPage }) => {
+    await inventoryPage.goto();
   });
 
-  test("inventory page should load successfully", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
+  test('inventory page should load successfully', async ({ inventoryPage }) => {
+
 
     await inventoryPage.waitForPageLoaded();
 
@@ -26,8 +30,7 @@ test.describe("Inventory Page", () => {
     expect(productNames).toEqual(sortedNames);
   });
 
-  test("user can add product to cart", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
+  test('user can add product to cart', async ({ inventoryPage }) => {
 
     const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
 
@@ -38,9 +41,7 @@ test.describe("Inventory Page", () => {
     await inventoryPage.header.assertCartBadgeCount(1);
   });
 
-  test("user can remove product from cart", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-
+  test('user can remove product from cart', async ({ inventoryPage }) => {
     const backpackItem = inventoryPage.getInventoryItem("Sauce Labs Backpack");
 
     await backpackItem.addToCart();
@@ -52,9 +53,7 @@ test.describe("Inventory Page", () => {
     await inventoryPage.header.assertCartBadgeHidden();
   });
 
-  test("products should be sorted alphabetically Z-A", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-
+  test('products should be sorted alphabetically Z-A', async ({ inventoryPage }) => {
     await inventoryPage.sortProducts("za");
 
     const productNames = await inventoryPage.inventoryContainer.getItemNames();
@@ -64,8 +63,7 @@ test.describe("Inventory Page", () => {
     expect(productNames).toEqual(sortedNames);
   });
 
-  test("user can sort products by price low to high", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
+  test('user can sort products by price low to high', async ({ inventoryPage }) => {
 
     await inventoryPage.sortProducts("lohi");
 
@@ -76,9 +74,7 @@ test.describe("Inventory Page", () => {
     expect(prices).toEqual(sortedPrices);
   });
 
-  test("user can add multiple products to cart", async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-
+  test('user can add multiple products to cart', async ({ inventoryPage }) => {
     const backpackItem = inventoryPage.inventoryContainer.getInventoryItem(
       "Sauce Labs Backpack",
     );
@@ -98,10 +94,9 @@ test.describe("Inventory Page", () => {
     await inventoryPage.header.assertCartBadgeCount(2);
   });
 
-  test("user can remove one product from multiple selected items", async ({
-    page,
+  test('user can remove one product from multiple selected items', async ({
+    inventoryPage
   }) => {
-    const inventoryPage = new InventoryPage(page);
 
     const backpackItem = inventoryPage.inventoryContainer.getInventoryItem(
       "Sauce Labs Backpack",

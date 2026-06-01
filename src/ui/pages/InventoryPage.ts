@@ -8,6 +8,7 @@ import { InventoryContainerComponent } from "@components/InventoryContainerCompo
 
 import { SortOption } from "src/types/SortOption";
 import { InventoryItemComponent } from "@components/InventoryItemComponent";
+import { ROUTES } from "@constants/routes";
 
 export class InventoryPage extends BaseAuthenticatedPage {
   readonly inventoryContainer: InventoryContainerComponent;
@@ -30,6 +31,12 @@ export class InventoryPage extends BaseAuthenticatedPage {
     this.pageTitle = page.locator('[data-test="title"]');
   }
 
+  async goto(): Promise<void> {
+    await super.goto(ROUTES.INVENTORY);
+
+    await this.waitForPageLoaded();
+  }
+  
   async waitForPageLoaded() {
     await this.header.waitForComponentLoaded();
     await this.inventoryContainer.waitForComponentLoaded();
