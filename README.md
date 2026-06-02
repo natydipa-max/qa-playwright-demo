@@ -186,6 +186,19 @@ While the current implementation focuses on UI testing, the project structure al
 
 ---
 
+## Test Tagging Strategy
+
+The framework uses Playwright metadata tags to organize execution by business domain and test criticality.
+
+Examples:
+
+- @smoke
+- @auth
+- @inventory
+- @checkout
+
+---
+
 # Example Test Flow
 
 ```ts
@@ -238,7 +251,6 @@ npx playwright test --headed
 
 - Implement reusable API clients and endpoint abstractions
 - Docker execution support
-- Test tagging strategy
 - Reporting integration
 - Visual regression testing
 

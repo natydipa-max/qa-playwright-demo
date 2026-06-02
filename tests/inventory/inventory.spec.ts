@@ -4,14 +4,19 @@ test.use({
   storageState: "playwright/.auth/standard-user.json",
 });
 
-test.describe("Inventory Page", () => {
+test.describe("Inventory Page", {
+  tag: ['@inventory']
+  },
+  () => {
 
   test.beforeEach(async ({ inventoryPage }) => {
     await inventoryPage.goto();
   });
 
-  test('inventory page should load successfully', async ({ inventoryPage }) => {
-
+  test('inventory page should load successfully',{
+      tag: ['@smoke'],
+  },
+   async ({ inventoryPage }) => {
 
     await inventoryPage.waitForPageLoaded();
 
