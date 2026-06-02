@@ -17,6 +17,7 @@ This project was designed to simulate a real-world enterprise automation framewo
 - Clean assertions
 - Stable synchronization strategies
 - Positive and negative test scenarios
+- Cross-browser execution (Chromium and Firefox)
 
 The goal is not only to automate tests, but also to demonstrate framework design, maintainability, and QA Automation engineering practices.
 
@@ -177,6 +178,14 @@ This keeps tests concise, reduces setup duplication, and improves readability.
 
 ---
 
+## Extensible Architecture
+
+The framework is organized to support both UI and API automation layers.
+
+While the current implementation focuses on UI testing, the project structure already includes a dedicated API layer intended for reusable clients, endpoint abstractions, and future hybrid UI/API testing strategies.
+
+---
+
 # Example Test Flow
 
 ```ts
@@ -227,10 +236,9 @@ npx playwright test --headed
 
 # Future Improvements
 
-- API testing layer
+- Implement reusable API clients and endpoint abstractions
 - Docker execution support
 - Test tagging strategy
-- Cross-browser parallel execution optimization
 - Reporting integration
 - Visual regression testing
 
