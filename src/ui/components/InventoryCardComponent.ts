@@ -34,18 +34,10 @@ export class InventoryCardComponent {
     return (await this.cardName.textContent()) || "";
   }
 
-  async getDescription() {
-    return (await this.cardDescription.textContent()) || "";
-  }
-
   async getPrice() {
     const priceText = await this.cardPrice.textContent();
 
     return parseFloat(priceText?.replace("$", "") || "0");
-  }
-
-  async getImageSrc() {
-    return await this.cardImage.getAttribute("src");
   }
 
   // Actions
@@ -65,6 +57,14 @@ export class InventoryCardComponent {
   async expectRemovedFromCart() {
     await expect(this.addButton).toBeVisible();
   }
+
+  async openDetailsFromName() {
+        await this.cardName.click();
+        }
+
+    async openDetailsFromImage() {
+        await this.cardImage.click();
+        }
 
   async waitForComponentLoaded() {
     await expect(this.cardName).toBeVisible();

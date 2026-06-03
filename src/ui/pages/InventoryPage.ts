@@ -38,7 +38,7 @@ export class InventoryPage extends BaseAuthenticatedPage {
   }
   
   async waitForPageLoaded() {
-    await this.header.waitForComponentLoaded();
+    await this.waitForAuthenticatedPageLoaded();
     await this.inventoryContainer.waitForComponentLoaded();
 
     await expect(this.pageTitle).toHaveText(UI_TEXT.PRODUCTS_PAGE_TITLE);

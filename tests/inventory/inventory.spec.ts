@@ -127,8 +127,33 @@ test.describe("Inventory Page", {
 
     await inventoryPage.header.assertCartBadgeCount(1);
 
+
     await backpackItem.expectRemovedFromCart();
 
     await bikeLightItem.expectAddedToCart();
+  });
+
+  test('user can open item details from product name', async ({
+  inventoryPage,
+  itemDetailsPage,
+  }) => {
+    const backpack =
+      inventoryPage.inventoryContainer.getCard('Sauce Labs Backpack');
+
+    await backpack.openDetailsFromName();
+
+    await itemDetailsPage.waitForPageLoaded();
+  });
+
+  test('user can open item details from product image', async ({
+  inventoryPage,
+  itemDetailsPage,
+  }) => {
+    const backpack =
+      inventoryPage.inventoryContainer.getCard('Sauce Labs Backpack');
+
+    await backpack.openDetailsFromImage();
+
+    await itemDetailsPage.waitForPageLoaded();
   });
 });

@@ -22,4 +22,8 @@ export abstract class BaseAuthenticatedPage extends BasePage {
   async clickLogout() {
     await this.sideMenu.logout();
   }
+
+  async waitForAuthenticatedPageLoaded() {
+    await this.header.waitForComponentLoaded();
+  }
 }
