@@ -40,8 +40,7 @@ src/
 │   ├── constants/
 │   ├── fixtures/
 │   ├── helpers/
-│   ├── utils/
-├── types/
+│   └── utils/
 │
 ├── ui/
 │   ├── components/
@@ -50,8 +49,11 @@ src/
 tests/
 ├── auth/
 ├── inventory/
+├── item/
+│
 ├── fixtures/
 │   └── pages.ts
+│
 └── setup/
     └── auth.setup.ts
 ```
@@ -76,6 +78,14 @@ tests/
 - Add/remove products to cart
 - Multiple cart selections
 - Product card validations
+- Navigation to item details
+
+## Item Details
+
+- Item details page validation
+- Navigation from inventory cards
+- Add/remove products to cart from item details
+- Navigation back to inventory
 
 ---
 
@@ -161,6 +171,19 @@ Custom fixtures are used to provide page objects already initialized and ready t
 
 This keeps tests concise, reduces setup duplication, and improves readability.
 
+Example:
+
+```ts
+test('user can add product to cart', async ({ inventoryPage }) => {
+  const backpackItem =
+    inventoryPage.inventoryContainer.getCard(
+      'Sauce Labs Backpack'
+    );
+
+  await backpackItem.addToCart();
+});
+```
+
 ---
 
 # Design Principles
@@ -182,7 +205,7 @@ This keeps tests concise, reduces setup duplication, and improves readability.
 
 The framework is organized to support both UI and API automation layers.
 
-While the current implementation focuses on UI testing, the project structure already includes a dedicated API layer intended for reusable clients, endpoint abstractions, and future hybrid UI/API testing strategies.
+While the current implementation focuses on UI testing, the framework has been designed to support a future API layer through reusable clients, endpoint abstractions, and hybrid UI/API testing strategies when working with applications that expose testable APIs.
 
 ---
 
@@ -195,7 +218,7 @@ Examples:
 - @smoke
 - @auth
 - @inventory
-- @checkout
+- @item-details
 
 ---
 
@@ -219,6 +242,14 @@ Tests interact with reusable page and component APIs instead of raw selectors, i
 
 ```bash
 npx playwright test
+```
+
+---
+
+## Run smoke tests
+
+```bash
+npx playwright test --grep @smoke
 ```
 
 ---
@@ -258,4 +289,4 @@ npx playwright test --headed
 
 # Author
 
-QA Automation portfolio project focused on scalable automation architecture and maintainable test design.
+QA Automation portfolio project focused on scalable test architecture, maintainable automation design, and modern Playwright engineering practices.
