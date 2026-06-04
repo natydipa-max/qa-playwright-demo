@@ -68,6 +68,8 @@ test.describe("Single Item Cart", {
     await expect(itemDetailsPage.itemName).toHaveText("Sauce Labs Backpack");   
   });
 
+});
+
 test.describe("Multiple Items Cart", {
   tag: ['@cart']
   },
@@ -109,5 +111,4 @@ test.describe("Multiple Items Cart", {
     await cartPage.cartContainer.expectItemNotPresent("Sauce Labs Backpack");
     await cartPage.cartContainer.expectItemPresent("Sauce Labs Bike Light");
   });
-});
 });
