@@ -20,9 +20,6 @@ test.describe("Inventory Page", {
 
     await inventoryPage.waitForPageLoaded();
 
-    const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
-    await backpackItem.waitForComponentLoaded();
-
     // amount of products should be 6
     await inventoryPage.inventoryContainer.assertItemsCount(6);
 

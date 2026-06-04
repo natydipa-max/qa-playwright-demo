@@ -11,10 +11,6 @@ export class InventoryCardComponent {
   readonly addButton: Locator;
   readonly removeButton: Locator;
 
-
-
-
-
   constructor(root: Locator) {
     this.root = root;
 
@@ -62,7 +58,7 @@ export class InventoryCardComponent {
         await this.cardName.click();
         }
 
-    async openDetailsFromImage() {
+  async openDetailsFromImage() {
         await this.cardImage.click();
         }
 

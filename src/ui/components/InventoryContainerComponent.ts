@@ -12,7 +12,10 @@ export class InventoryContainerComponent {
 
   async waitForComponentLoaded() {
     await expect(this.root).toBeVisible();
-    await expect(this.cards.first()).toBeVisible();
+    const firstCard =
+    new InventoryCardComponent(this.cards.first());
+
+    await firstCard.waitForComponentLoaded();
   }
 
   getCard(name: string): InventoryCardComponent {

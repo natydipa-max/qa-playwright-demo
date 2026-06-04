@@ -50,6 +50,7 @@ tests/
 ├── auth/
 ├── inventory/
 ├── item/
+├── cart/
 │
 ├── fixtures/
 │   └── pages.ts
@@ -87,6 +88,15 @@ tests/
 - Add/remove products to cart from item details
 - Navigation back to inventory
 
+## Cart
+
+- Empty cart validation
+- Single item cart validation
+- Multiple items cart validation
+- Remove products from cart
+- Continue shopping navigation
+- Cart state preservation after item removal
+
 ---
 
 # Architecture Highlights
@@ -99,26 +109,39 @@ UI interactions are encapsulated into reusable page objects to improve readabili
 
 ## Reusable UI Components
 
-UI is modeled using a Card-based architecture:
+The framework models UI using domain-driven components:
 
-- InventoryCardComponent represents a single product entity
-- InventoryContainerComponent manages collections of cards
+- InventoryCardComponent represents a product in the inventory
+- InventoryContainerComponent manages collections of inventory cards
+
+- CartItemComponent represents a product inside the shopping cart
+- CartContainerComponent manages collections of cart items
 
 ---
 
 ## Card-Based UI Model
 
-The framework uses a Card-based model instead of data-extraction utilities.
+The framework uses entity-based UI modeling.
 
-Each product is represented as an InventoryCardComponent, and interactions are performed at the entity level instead of extracting raw DOM data.
+Each business entity is represented by its own reusable component:
+
+- InventoryCardComponent for inventory products
+- CartItemComponent for cart products
+
+Collection-level operations are delegated to dedicated container components.
 
 ---
 
 ## Collection Management Pattern
 
-The InventoryContainerComponent is responsible for managing collections of UI elements, not for extracting or transforming data.
+Container components are responsible for managing collections of UI entities.
 
-Data extraction is performed through Card-level abstractions.
+Examples:
+
+- InventoryContainerComponent manages product cards
+- CartContainerComponent manages cart items
+
+Entity-specific behavior remains encapsulated within the corresponding component.
 
 ---
 
@@ -183,6 +206,28 @@ test('user can add product to cart', async ({ inventoryPage }) => {
   await backpackItem.addToCart();
 });
 ```
+
+---
+
+## Domain-Oriented Component Architecture
+
+The framework follows a domain-oriented component model:
+
+Page
+ └── Container
+      └── Entity Component
+
+Examples:
+
+InventoryPage
+ └── InventoryContainerComponent
+      └── InventoryCardComponent
+
+CartPage
+ └── CartContainerComponent
+      └── CartItemComponent
+
+This structure promotes scalability, separation of responsibilities, and reusable business abstractions.
 
 ---
 
