@@ -24,23 +24,23 @@ export class HeaderComponent {
     this.appLogo = page.locator(".app_logo");
   }
 
-  async openMenu() {
+  async openMenu(): Promise<void> {
     await this.menuButton.click();
   }
 
-  async openCart() {
+  async openCart(): Promise<void> {
     await this.shoppingCartLink.click();
   }
 
-  async assertCartBadgeCount(expectedCount: number) {
+  async assertCartBadgeCount(expectedCount: number): Promise<void> {
     await expect(this.shoppingCartBadge).toHaveText(expectedCount.toString());
   }
 
-  async assertCartBadgeHidden() {
+  async assertCartBadgeHidden(): Promise<void> {
     await expect(this.shoppingCartBadge).toBeHidden();
   }
 
-  async waitForComponentLoaded() {
+  async waitForComponentLoaded(): Promise<void> {
     await expect(this.menuButton).toBeVisible();
 
     await expect(this.shoppingCartLink).toBeVisible();

@@ -1,24 +1,15 @@
 import { expect, Locator } from "@playwright/test";
+import { BaseItemComponent } from "./baseComponent/BaseItemComponent";
 
-export class InventoryCardComponent {
-  readonly root: Locator;
-
-  readonly cardName: Locator;
-  readonly cardPrice: Locator;
-  readonly cardDescription: Locator;
+export class InventoryCardComponent extends BaseItemComponent {
   readonly cardImage: Locator;
 
   readonly addButton: Locator;
   readonly removeButton: Locator;
 
   constructor(root: Locator) {
-    this.root = root;
 
-    this.cardName = root.locator('[data-test="inventory-item-name"]');
-    this.cardPrice = root.locator('[data-test="inventory-item-price"]');
-    this.cardDescription = root.locator(
-      '[data-test="inventory-item-description"]',
-    );
+    super(root);
     this.cardImage = root.locator("img.inventory_item_img");
 
     this.addButton = root.locator('button:has-text("Add to cart")');
@@ -26,47 +17,38 @@ export class InventoryCardComponent {
   }
 
   // Getters
-  async getName() {
-    return (await this.cardName.textContent()) || "";
-  }
-
-  async getPrice() {
-    const priceText = await this.cardPrice.textContent();
-
-    return parseFloat(priceText?.replace("$", "") || "0");
-  }
+  
 
   // Actions
-  async addToCart() {
+  async addToCart(): Promise<void> {
     await this.addButton.click();
   }
 
-  async removeFromCart() {
+  async removeFromCart(): Promise<void> {
     await this.removeButton.click();
   }
 
-  //Assertions
-  async expectAddedToCart() {
-    await expect(this.removeButton).toBeVisible();
-  }
-
-  async expectRemovedFromCart() {
-    await expect(this.addButton).toBeVisible();
-  }
-
-  async openDetailsFromName() {
-        await this.cardName.click();
+  async openDetailsFromName(): Promise<void> {
+        await this.itemName.click();
         }
 
-  async openDetailsFromImage() {
+  async openDetailsFromImage(): Promise<void> {
         await this.cardImage.click();
         }
 
-  async waitForComponentLoaded() {
-    await expect(this.cardName).toBeVisible();
-    await expect(this.cardPrice).toBeVisible();
+  //Assertions
+  async isAddedToCart(): Promise<void> {
+    await expect(this.removeButton).toBeVisible();
+  }
+
+  async isRemovedFromCart(): Promise<void> {
+    await expect(this.addButton).toBeVisible();
+  }
+
+  async waitForComponentLoaded(): Promise<void> {
+    await this.waitForBaseFieldsLoaded();
+    
     await expect(this.root.locator("button")).toBeVisible();
-    await expect(this.cardDescription).toBeVisible();
     await expect(this.cardImage).toBeVisible();
     await expect(this.cardImage).toHaveAttribute("src", /.+\.jpg/);
   }

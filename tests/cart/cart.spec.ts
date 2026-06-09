@@ -10,7 +10,7 @@ test.describe("Empty Cart", {
   () => {
 
   test.beforeEach(async ({ cartPage }) => {
-    await cartPage.goto();
+    await cartPage.open();
   });
 
   test('cart page should load successfully',{
@@ -28,7 +28,7 @@ test.describe("Single Item Cart", {
   () => {
 
   test.beforeEach(async ({ inventoryPage }) => {
-    await inventoryPage.goto();
+    await inventoryPage.open();
     const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
     await backpackItem.addToCart();
     await inventoryPage.header.openCart();
@@ -43,7 +43,7 @@ test.describe("Single Item Cart", {
 
     await cartPage.cartContainer.assertItemsCount(1);
 
-    await cartPage.cartContainer.expectItemPresent("Sauce Labs Backpack");
+    await cartPage.cartContainer.assertItemPresent("Sauce Labs Backpack");
   });
 
   test('user can remove product from cart', async ({ cartPage }) => {
@@ -52,7 +52,7 @@ test.describe("Single Item Cart", {
 
     await cartPage.cartContainer.getItem("Sauce Labs Backpack").removeFromCart();
 
-    await cartPage.cartContainer.expectItemNotPresent("Sauce Labs Backpack");
+    await cartPage.cartContainer.assertItemNotPresent("Sauce Labs Backpack");
   });
 
   test('user can navigate to item details from cart', async ({
@@ -76,7 +76,7 @@ test.describe("Multiple Items Cart", {
   () => {
 
   test.beforeEach(async ({ inventoryPage }) => {
-    await inventoryPage.goto();
+    await inventoryPage.open();
 
     const backpackItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Backpack");
     const bikeLightItem = inventoryPage.inventoryContainer.getCard("Sauce Labs Bike Light");
@@ -96,19 +96,19 @@ test.describe("Multiple Items Cart", {
 
     await cartPage.cartContainer.assertItemsCount(2);
 
-    await cartPage.cartContainer.expectItemPresent("Sauce Labs Backpack");
-    await cartPage.cartContainer.expectItemPresent("Sauce Labs Bike Light");
+    await cartPage.cartContainer.assertItemPresent("Sauce Labs Backpack");
+    await cartPage.cartContainer.assertItemPresent("Sauce Labs Bike Light");
   });
 
    test('removing one item preserves remaining items in cart', async ({ cartPage }) => {
+
     await cartPage.waitForPageLoaded();
     await cartPage.cartContainer.waitForItemsLoaded();
-
-    await cartPage.cartContainer.getItem("Sauce Labs Backpack").removeFromCart();
+        await cartPage.cartContainer.getItem("Sauce Labs Backpack").removeFromCart();
 
     await cartPage.cartContainer.assertItemsCount(1);
 
-    await cartPage.cartContainer.expectItemNotPresent("Sauce Labs Backpack");
-    await cartPage.cartContainer.expectItemPresent("Sauce Labs Bike Light");
+    await cartPage.cartContainer.assertItemNotPresent("Sauce Labs Backpack");
+    await cartPage.cartContainer.assertItemPresent("Sauce Labs Bike Light");
   });
 });

@@ -44,13 +44,16 @@ src/
 │
 ├── ui/
 │   ├── components/
+│       └── baseComponent/
 │   └── pages/
+│       └── basePage/
 │
 tests/
 ├── auth/
 ├── inventory/
 ├── item/
 ├── cart/
+├── checkout/
 │
 ├── fixtures/
 │   └── pages.ts
@@ -97,6 +100,20 @@ tests/
 - Continue shopping navigation
 - Cart state preservation after item removal
 
+## Checkout
+
+- Checkout Step One validation
+- Required field validations
+- Error message validations
+- Checkout information submission
+- Checkout Step Two validation
+- Order summary validation
+- Item quantity validation
+- Total calculation validation
+- Checkout cancellation flow
+- Checkout completion flow
+- Return to inventory after order completion
+
 ---
 
 # Architecture Highlights
@@ -117,18 +134,23 @@ The framework models UI using domain-driven components:
 - CartItemComponent represents a product inside the shopping cart
 - CartContainerComponent manages collections of cart items
 
+- CheckoutItemComponent represents a product in the checkout overview
+- CheckoutContainerComponent manages collections of checkout items
+
 ---
 
-## Card-Based UI Model
+## Shared Component Architecture
 
-The framework uses entity-based UI modeling.
+Reusable UI entities are modeled through shared abstractions.
 
-Each business entity is represented by its own reusable component:
+Examples:
 
-- InventoryCardComponent for inventory products
-- CartItemComponent for cart products
+- BaseItemComponent
+  - InventoryCardComponent
+  - CartItemComponent
+  - CheckoutItemComponent
 
-Collection-level operations are delegated to dedicated container components.
+This approach centralizes common product behavior while allowing each business context to expose its own actions and validations.
 
 ---
 
@@ -227,6 +249,10 @@ CartPage
  └── CartContainerComponent
       └── CartItemComponent
 
+CheckoutStepTwoPage
+ └── CheckoutContainerComponent
+      └── CheckoutItemComponent
+
 This structure promotes scalability, separation of responsibilities, and reusable business abstractions.
 
 ---
@@ -243,6 +269,9 @@ This structure promotes scalability, separation of responsibilities, and reusabl
 - Type-safe test APIs with TypeScript
 - Authentication isolated from business scenarios using Storage State
 - Maintainable and scalable test architecture
+- Shared abstractions through BaseItemComponent
+- Domain-oriented UI modeling
+- Clear separation between page, container, and entity responsibilities
 
 ---
 
@@ -264,6 +293,8 @@ Examples:
 - @auth
 - @inventory
 - @item-details
+- @cart
+- @checkout
 
 ---
 
@@ -325,10 +356,27 @@ npx playwright test --headed
 
 # Future Improvements
 
-- Implement reusable API clients and endpoint abstractions
 - Docker execution support
 - Reporting integration
 - Visual regression testing
+
+---
+
+# Current Framework Status
+
+Current implementation includes:
+
+- Authentication workflow
+- Inventory workflow
+- Item Details workflow
+- Cart workflow
+- Complete Checkout workflow
+- Shared page and component abstractions
+- Storage State authentication
+- Cross-browser execution
+- Smoke and functional test suites
+
+Current test suite: 87+ automated tests
 
 ---
 

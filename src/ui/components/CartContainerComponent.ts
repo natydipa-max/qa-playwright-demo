@@ -1,34 +1,21 @@
 import { expect, Locator } from "@playwright/test";
 import { CartItemComponent } from "./CartItemComponent";
+import { BaseContainerComponent } from "./baseComponent/BaseContainerComponent";
 
-export class CartContainerComponent {
-    readonly root: Locator;
-    readonly cartItems: Locator;
-
-    constructor(root: Locator) {
-        this.root = root;
-        this.cartItems = root.locator('[data-test="inventory-item"]');
+export class CartContainerComponent extends BaseContainerComponent {
+    protected createItem(locator: Locator): CartItemComponent 
+    {
+        return new CartItemComponent(locator);
     }
-
-    async waitForComponentLoaded() {
-        await expect(this.root).toBeVisible();
-    }
-
-    async waitForItemsLoaded() {
-        const firstItem = new CartItemComponent(
-        this.cartItems.first()
-            );
-
-        await firstItem.waitForComponentLoaded();
-    }
-
+    
+    // Getters
     getItem(itemName: string): CartItemComponent {
         return new CartItemComponent(
               this.cartItems.filter({ hasText: itemName })
             );
     }
 
-    async getAllItems() {
+    async getAllItems(): Promise<CartItemComponent[]> {
         const items = await this.cartItems.all();
 
         return items.map(
@@ -37,17 +24,28 @@ export class CartContainerComponent {
     }   
 
     // Assertions
+    async waitForComponentLoaded(): Promise<void> {
+        await expect(this.root).toBeVisible();
+    }
 
-    async expectItemPresent(itemName: string) {
+    async waitForItemsLoaded(): Promise<void> {
+        const firstItem = new CartItemComponent(
+        this.cartItems.first()
+            );
+
+        await firstItem.waitForComponentLoaded();
+    }
+
+    async assertItemPresent(itemName: string): Promise<void> {
         const item = this.cartItems.filter({ hasText: itemName });
         await expect(item).toHaveCount(1);
     }
 
-    async expectItemNotPresent(itemName: string) {
+    async assertItemNotPresent(itemName: string): Promise<void> {
         const item = this.cartItems.filter({ hasText: itemName });
         await expect(item).toHaveCount(0);
     }
-    async assertItemsCount(expected: number) {
+    async assertItemsCount(expected: number): Promise<void> {
         await expect(this.cartItems)
             .toHaveCount(expected);
     }

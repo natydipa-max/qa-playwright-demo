@@ -15,13 +15,13 @@ export abstract class BasePage {
   /**
    * Reusable visibility validation
    */
-  async assertElementsVisible(elements: Locator[]) {
+  async assertElementsVisible(elements: Locator[]): Promise<void> {
     for (const element of elements) {
       await expect(element).toBeVisible();
     }
   }
 
-  async goto(route: string) {
-    await this.page.goto(route);
+  async goto(url: string): Promise<void> {
+    await this.page.goto(url);
   }
 }

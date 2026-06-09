@@ -7,7 +7,7 @@ import { USERS } from "@fixtures/users";
 export async function loginAsStandardUser(page: Page, waitForInventory = true) {
   const loginPage = new LoginPage(page);
 
-  await loginPage.goto();
+  await loginPage.open();
 
   if (waitForInventory) {
     await Promise.all([

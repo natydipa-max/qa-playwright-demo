@@ -2,12 +2,12 @@ import { expect, Locator, Page } from "@playwright/test";
 
 import { UI_TEXT } from "@constants/ui";
 
-import { BaseAuthenticatedPage } from "./BaseAuthenticatedPage";
+import { BaseAuthenticatedPage } from "./basePage/BaseAuthenticatedPage";
 
 import { InventoryContainerComponent } from "@components/InventoryContainerComponent";
 
 import { SortOption } from "src/types/SortOption";
-import { InventoryCardComponent } from "@components/InventoryCardComponent";
+
 import { ROUTES } from "@constants/routes";
 
 export class InventoryPage extends BaseAuthenticatedPage {
@@ -31,13 +31,19 @@ export class InventoryPage extends BaseAuthenticatedPage {
     this.pageTitle = page.locator('[data-test="title"]');
   }
 
-  async goto(): Promise<void> {
+  // Actions
+  async open(): Promise<void> {
     await super.goto(ROUTES.INVENTORY);
 
     await this.waitForPageLoaded();
   }
   
-  async waitForPageLoaded() {
+  async sortProducts(sortOption: SortOption): Promise<void> {
+    await this.productSortSelect.selectOption(sortOption);
+  }
+
+  // Assertions
+  async waitForPageLoaded(): Promise<void> {
     await this.waitForAuthenticatedPageLoaded();
     await this.inventoryContainer.waitForComponentLoaded();
 
@@ -46,8 +52,6 @@ export class InventoryPage extends BaseAuthenticatedPage {
     await this.assertElementsVisible([this.pageTitle, this.productSortSelect]);
   }
 
-  async sortProducts(sortOption: SortOption) {
-    await this.productSortSelect.selectOption(sortOption);
-  }
+  
 
 }

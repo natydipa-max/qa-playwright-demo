@@ -10,7 +10,7 @@ test.describe("Inventory Page", {
   () => {
 
   test.beforeEach(async ({ inventoryPage }) => {
-    await inventoryPage.goto();
+    await inventoryPage.open();
   });
 
   test('inventory page should load successfully',{
@@ -48,7 +48,7 @@ test.describe("Inventory Page", {
 
     await inventoryPage.header.assertCartBadgeCount(1);
 
-    await backpackItem.expectAddedToCart();
+    await backpackItem.isAddedToCart();
   });
 
   test('user can remove product from cart', async ({ inventoryPage }) => {
@@ -58,7 +58,7 @@ test.describe("Inventory Page", {
 
     await backpackItem.removeFromCart();
 
-    await backpackItem.expectRemovedFromCart();
+    await backpackItem.isRemovedFromCart();
 
     await inventoryPage.header.assertCartBadgeHidden();
   });
@@ -99,9 +99,9 @@ test.describe("Inventory Page", {
 
     await inventoryPage.header.assertCartBadgeCount(2);
 
-    await backpackItem.expectAddedToCart();
+    await backpackItem.isAddedToCart();
 
-    await bikeLightItem.expectAddedToCart();
+    await bikeLightItem.isAddedToCart();
   });
 
   test('removing one item preserves remaining cart state', async ({
@@ -125,9 +125,9 @@ test.describe("Inventory Page", {
     await inventoryPage.header.assertCartBadgeCount(1);
 
 
-    await backpackItem.expectRemovedFromCart();
+    await backpackItem.isRemovedFromCart();
 
-    await bikeLightItem.expectAddedToCart();
+    await bikeLightItem.isAddedToCart();
   });
 
   test('user can open item details from product name', async ({

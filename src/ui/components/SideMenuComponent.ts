@@ -27,13 +27,8 @@ export class SideMenuComponent {
     this.closeMenuButton = page.locator('[data-test="close-menu"]');
   }
 
-  async waitForComponentLoaded() {
-    await expect(this.logoutLink).toBeVisible();
-    await expect(this.resetAppStateLink).toBeVisible();
-    await expect(this.closeMenuButton).toBeVisible();
-  }
-
-  async logout() {
+  // Actions
+  async logout(): Promise<void> {
     await this.logoutLink.click();
   }
 
@@ -41,7 +36,14 @@ export class SideMenuComponent {
     await this.resetAppStateLink.click();
   }
 
-  async closeMenu() {
+  async closeMenu(): Promise<void> {
     await this.closeMenuButton.click();
+  }
+
+  // Assertions
+  async waitForComponentLoaded(): Promise<void> {
+    await expect(this.logoutLink).toBeVisible();
+    await expect(this.resetAppStateLink).toBeVisible();
+    await expect(this.closeMenuButton).toBeVisible();
   }
 }

@@ -1,6 +1,9 @@
-import { BaseAuthenticatedPage } from "./BaseAuthenticatedPage";
+import { BaseAuthenticatedPage } from "./basePage/BaseAuthenticatedPage";
+
 import { ROUTES } from "@constants/routes";
+
 import { expect, Locator, Page } from "@playwright/test";
+
 import { CartContainerComponent } from "@components/CartContainerComponent";
 
 export class CartPage extends BaseAuthenticatedPage {
@@ -24,7 +27,22 @@ export class CartPage extends BaseAuthenticatedPage {
         this.checkoutButton = page.locator('[data-test="checkout"]');
     }
 
-    async waitForPageLoaded() {
+    
+    // Actions
+    async clickContinueShopping(): Promise<void> {
+        await this.continueShoppingButton.click();
+    }
+
+    async clickCheckout(): Promise<void> {
+        await this.checkoutButton.click();  
+    }
+
+    async open(): Promise<void> {
+        await super.goto(ROUTES.CART);
+    }
+
+    // Assertions
+    async waitForPageLoaded(): Promise<void> {
         await expect(this.page).toHaveURL(ROUTES.CART);
         await this.waitForAuthenticatedPageLoaded();
         await this.cartContainer.waitForComponentLoaded();
@@ -32,18 +50,4 @@ export class CartPage extends BaseAuthenticatedPage {
         await expect(this.checkoutButton).toBeVisible();
     }
 
-    // Actions
-    async clickContinueShopping() {
-        await this.continueShoppingButton.click();
-    }
-
-    async clickCheckout() {
-        await this.checkoutButton.click();  
-    }
-
-    async goto() {
-        await this.page.goto(ROUTES.CART);
-    }
-
-    
 }

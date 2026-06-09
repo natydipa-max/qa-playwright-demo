@@ -25,7 +25,7 @@ test('user can add item to cart from item details page',
     async ({itemDetailsPage}) => {
     
     await itemDetailsPage.addToCart();
-    await itemDetailsPage.expectAddedToCart();
+    await itemDetailsPage.isAddedToCart();
 });
 
 test('user can remove item from cart from item details page', 
@@ -33,7 +33,7 @@ test('user can remove item from cart from item details page',
     
     await itemDetailsPage.addToCart();
     await itemDetailsPage.removeFromCart();
-    await itemDetailsPage.expectRemovedFromCart();
+    await itemDetailsPage.isRemovedFromCart();
 });
 
 test('user can navigate back to inventory page',

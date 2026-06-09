@@ -19,11 +19,13 @@ export abstract class BaseAuthenticatedPage extends BasePage {
     this.sideMenu = new SideMenuComponent(page);
   }
 
-  async clickLogout() {
+  // Actions
+  async clickLogout(): Promise<void> {
     await this.sideMenu.logout();
   }
 
-  async waitForAuthenticatedPageLoaded() {
+  // Assertions
+  async waitForAuthenticatedPageLoaded(): Promise<void> {
     await this.header.waitForComponentLoaded();
   }
 }

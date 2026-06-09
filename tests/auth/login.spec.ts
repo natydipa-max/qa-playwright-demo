@@ -16,7 +16,7 @@ test.describe("Login", {
 
     loginPage = new LoginPage(page);
 
-    await loginPage.goto();
+    await loginPage.open();
   });
 
   test('standard user can login', {
