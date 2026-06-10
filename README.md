@@ -420,9 +420,21 @@ docker run --rm playwright-demo
 
 ---
 
-# Future Improvements
+# Visual Regression Testing
 
-- Visual regression testing
+The framework includes visual regression testing using Playwright snapshot assertions.
+
+Current visual coverage:
+
+- Login Page
+- Inventory Page
+- Item Details Page
+- Cart Page
+- Checkout Step One
+- Checkout Step Two
+- Checkout Complete
+
+Visual tests are executed in both Chromium and Firefox and compare the current UI against approved baseline snapshots to detect unexpected visual changes.
 
 ---
 
