@@ -3,7 +3,7 @@ import { test, expect } from "tests/fixtures/pages";
 
 test.describe("Login Visual Tests", () => {
 
-    test("login page visual snapshot", async ({
+    test('login page visual snapshot @visual', async ({
     page
     }) => {
 

@@ -1,4 +1,4 @@
-name: Smoke Tests
+name: Smoke Tests (manual sanity checks for portfolio)
 
 on:
   workflow_dispatch:

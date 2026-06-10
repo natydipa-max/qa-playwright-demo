@@ -19,7 +19,7 @@ test.describe("Checkout Step Two Visual Tests", () => {
         });
       });
 
-    test("checkout step two page visual snapshot", async ({
+    test('checkout step two page visual snapshot @visual', async ({
     checkoutStepTwoPage,
     page,
         }) => {

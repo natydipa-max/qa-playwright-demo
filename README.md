@@ -308,6 +308,7 @@ Examples:
 - @item-details
 - @cart
 - @checkout
+- @visual (Visual Regression)
 
 ---
 

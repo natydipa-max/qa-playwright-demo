@@ -6,7 +6,7 @@ test.use({
 
 test.describe("Checkout Complete Visual Tests", () => {
 
-test("checkout complete page visual snapshot", async ({
+test('checkout complete page visual snapshot @visual', async ({
   checkoutCompletePage,
   page,
     }) => {

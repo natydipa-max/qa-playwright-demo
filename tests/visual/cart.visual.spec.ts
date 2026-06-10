@@ -17,7 +17,7 @@ test.describe("Cart Visual Tests", () => {
         await inventoryPage.header.openCart();
     });
 
-    test("cart page visual snapshot", async ({
+    test('cart page visual snapshot @visual', async ({
         cartPage,
         page,
         }) => {
