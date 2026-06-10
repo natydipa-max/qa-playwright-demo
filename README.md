@@ -354,6 +354,44 @@ npx playwright test --headed
 
 ---
 
+# Reporting
+
+The framework uses Playwright's built-in reporting capabilities to provide detailed execution results and debugging artifacts.
+
+Available features:
+
+- Interactive HTML reports
+- Failure screenshots
+- Failure videos
+- Execution traces on retries
+
+Configuration:
+
+```ts
+reporter: [["html"], ["list"]]
+
+trace: "on-first-retry"
+screenshot: "only-on-failure"
+video: "retain-on-failure"
+```
+
+Generate and open the report:
+
+```bash
+npx playwright test
+npx playwright show-report
+```
+
+Failure artifacts are automatically preserved, enabling faster debugging and root cause analysis.
+
+## Sample Report
+
+The framework generates interactive HTML reports that provide execution results, test metadata, tags, timings, and debugging artifacts.
+
+![Playwright Report](docs/playwright-report.png)
+
+---
+
 # Future Improvements
 
 - Docker execution support
