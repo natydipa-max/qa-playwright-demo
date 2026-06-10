@@ -14,7 +14,10 @@ test.describe("Login Visual Tests", () => {
 
         await expect(page).toHaveScreenshot(
             "login-page.png",
-            { fullPage: true }
+            { 
+                fullPage: true,
+                animations: "disabled",
+            }
         );
     });
 

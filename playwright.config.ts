@@ -10,15 +10,18 @@ export default defineConfig({
   reporter: [["html"], ["list"]],
 
   use: {
-    baseURL: "https://www.saucedemo.com",
+  baseURL: "https://www.saucedemo.com",
 
-    trace: "on-first-retry",
+  trace: "on-first-retry",
+  screenshot: "only-on-failure",
+  video: "retain-on-failure",
 
-    screenshot: "only-on-failure",
+  headless: true,
 
-    video: "retain-on-failure",
-
-    headless: true,
+  viewport: { width: 1280, height: 720 },
+  deviceScaleFactor: 1,
+  locale: "en-US",
+  timezoneId: "UTC",
   },
 
   projects: [
