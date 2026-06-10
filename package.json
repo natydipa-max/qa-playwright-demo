@@ -6,8 +6,13 @@
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --ui",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:checkout": "playwright test --grep @checkout",
+    "test:auth": "playwright test --grep @auth",
+    "test:inventory": "playwright test --grep @inventory",
+    "test:report": "playwright show-report",
     "typecheck": "tsc --noEmit"
-  },
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

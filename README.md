@@ -4,6 +4,19 @@
 
 Enterprise-style QA Automation framework built with Playwright and TypeScript.
 
+## Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Current Test Coverage](#current-test-coverage)
+- [Architecture Highlights](#architecture-highlights)
+- [Design Principles](#design-principles)
+- [Running Tests](#running-tests)
+- [Reporting](#reporting)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
+
 ---
 
 # Overview
@@ -392,10 +405,23 @@ The framework generates interactive HTML reports that provide execution results,
 
 ---
 
+# Docker Support
+
+The framework can be executed inside a Docker container using the official Playwright image.
+
+Build image:
+
+```bash
+docker build -t playwright-demo .
+```
+
+Run tests:
+docker run --rm playwright-demo
+
+---
+
 # Future Improvements
 
-- Docker execution support
-- Reporting integration
 - Visual regression testing
 
 ---
