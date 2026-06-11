@@ -16,7 +16,6 @@ test('checkout complete page visual snapshot @visual', async ({
     await expect(page).toHaveScreenshot(
         "checkout-complete-page.png",
         { 
-            fullPage: true,
             animations: "disabled",
         }
     );

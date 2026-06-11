@@ -16,7 +16,6 @@ test.describe("Item Details Visual Tests", () => {
         await expect(page).toHaveScreenshot(
             "item-details-page.png",
             { 
-                fullPage: true,
                 animations: "disabled",
             }
         );

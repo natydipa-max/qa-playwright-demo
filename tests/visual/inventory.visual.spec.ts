@@ -17,7 +17,6 @@ test.describe("Inventory Visual Tests", () => {
     await expect(page).toHaveScreenshot(
       "inventory-page.png",
       { 
-        fullPage: true,
         animations: "disabled",
         }
     );

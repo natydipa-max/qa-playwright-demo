@@ -16,7 +16,6 @@ test.describe("Checkout Step One Visual Tests", () => {
         await expect(page).toHaveScreenshot(
             "checkout-step-one-page.png",
             { 
-                fullPage: true,
                 animations: "disabled",
             }
         );
