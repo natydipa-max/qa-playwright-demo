@@ -11,12 +11,12 @@ export class CartContainerComponent extends BaseContainerComponent {
     // Getters
     getItem(itemName: string): CartItemComponent {
         return new CartItemComponent(
-              this.cartItems.filter({ hasText: itemName })
+              this.items.filter({ hasText: itemName })
             );
     }
 
     async getAllItems(): Promise<CartItemComponent[]> {
-        const items = await this.cartItems.all();
+        const items = await this.items.all();
 
         return items.map(
             (item) => new CartItemComponent(item)
@@ -30,23 +30,23 @@ export class CartContainerComponent extends BaseContainerComponent {
 
     async waitForItemsLoaded(): Promise<void> {
         const firstItem = new CartItemComponent(
-        this.cartItems.first()
+        this.items.first()
             );
 
         await firstItem.waitForComponentLoaded();
     }
 
     async assertItemPresent(itemName: string): Promise<void> {
-        const item = this.cartItems.filter({ hasText: itemName });
+        const item = this.items.filter({ hasText: itemName });
         await expect(item).toHaveCount(1);
     }
 
     async assertItemNotPresent(itemName: string): Promise<void> {
-        const item = this.cartItems.filter({ hasText: itemName });
+        const item = this.items.filter({ hasText: itemName });
         await expect(item).toHaveCount(0);
     }
     async assertItemsCount(expected: number): Promise<void> {
-        await expect(this.cartItems)
+        await expect(this.items)
             .toHaveCount(expected);
     }
 

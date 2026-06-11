@@ -11,12 +11,12 @@ export class InventoryContainerComponent extends BaseContainerComponent {
 
   getCard(name: string): InventoryCardComponent {
     return new InventoryCardComponent(
-      this.cartItems.filter({ hasText: name })
+      this.items.filter({ hasText: name })
     );
   }
 
   async getAllCards(): Promise<InventoryCardComponent[]> {
-  const items = await this.cartItems.all();
+  const items = await this.items.all();
 
   return items.map(
     (item) => new InventoryCardComponent(item)
@@ -24,34 +24,18 @@ export class InventoryContainerComponent extends BaseContainerComponent {
 }
 
   async getAllNames(): Promise<string[]> {
-  const count = await this.cartItems.count();
-
-  const names: string[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const card = new InventoryCardComponent(this.cartItems.nth(i));
-    names.push(await card.getName());
+  const cards = await this.getAllCards();
+  return Promise.all(cards.map(card => card.getName()));
   }
-
-  return names;
-}
 
   async getAllPrices(): Promise<number[]> {
-  const count = await this.cartItems.count();
-
-  const prices: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const card = new InventoryCardComponent(this.cartItems.nth(i));
-    prices.push(await card.getPrice());
+  const cards = await this.getAllCards();
+  return Promise.all(cards.map(card => card.getPrice()));
   }
-
-  return prices;
-}
 
 //Assertions
 
   async assertItemsCount(expectedCount: number): Promise<void> {
-    await expect(this.cartItems).toHaveCount(expectedCount);
+    await expect(this.items).toHaveCount(expectedCount);
   }
 }

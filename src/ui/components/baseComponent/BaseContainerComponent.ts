@@ -3,11 +3,11 @@ import { BaseItemComponent } from "./BaseItemComponent"
 
 export abstract class BaseContainerComponent {
   readonly root: Locator;
-  readonly cartItems: Locator;
+  readonly items: Locator;
 
   constructor(root: Locator) {
     this.root = root;
-    this.cartItems = root.locator('[data-test="inventory-item"]');
+    this.items = root.locator('[data-test="inventory-item"]');
   }
 
   protected abstract createItem(locator: Locator): BaseItemComponent;
@@ -17,11 +17,11 @@ export abstract class BaseContainerComponent {
   }
 
   async waitForItemsLoaded(): Promise<void> {
-    const firstItem = this.createItem(this.cartItems.first());
+    const firstItem = this.createItem(this.items.first());
     await firstItem.waitForComponentLoaded();
   }
 
   async getItemCount(): Promise<number> {
-    return this.cartItems.count();
+    return this.items.count();
   }
 }

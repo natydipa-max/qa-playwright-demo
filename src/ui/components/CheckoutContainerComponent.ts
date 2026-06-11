@@ -10,12 +10,12 @@ export class CheckoutContainerComponent extends BaseContainerComponent {
 
   getItem(name: string): CheckoutItemComponent {
     return new CheckoutItemComponent(
-      this.cartItems.filter({ hasText: name })
+      this.items.filter({ hasText: name })
     );
   }
 
   async getAllItems(): Promise<CheckoutItemComponent[]> {
-    const items = await this.cartItems.all();
+    const items = await this.items.all();
     return items.map((item) => new CheckoutItemComponent(item));
   }
 
@@ -31,7 +31,7 @@ export class CheckoutContainerComponent extends BaseContainerComponent {
 
   // Asserts
   async assertItemsCount(expectedCount: number): Promise<void> {
-    await expect(this.cartItems).toHaveCount(expectedCount);
+    await expect(this.items).toHaveCount(expectedCount);
   }
 
   async assertItemPresent(itemName: string): Promise<void> {

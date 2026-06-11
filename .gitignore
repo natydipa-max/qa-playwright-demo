@@ -9,3 +9,6 @@ node_modules/
 
 # MacOS
 .DS_Store
+
+# Mac Snapshot
+tests/**/*.spec.ts-snapshots/*-darwin.png
