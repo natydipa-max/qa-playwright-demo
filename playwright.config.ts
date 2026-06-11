@@ -38,6 +38,7 @@ export default defineConfig({
        },
 
        dependencies: ["setup"],
+       testIgnore: /.*\.visual\.spec\.ts/,
     },
 
     {
@@ -47,8 +48,22 @@ export default defineConfig({
         storageState: "playwright/.auth/standard-user.json",
        },
         dependencies: ["setup"],
+        testIgnore: /.*\.visual\.spec\.ts/,
     }, 
-
+    
+    {
+      name: "visual",
+      use: { 
+        browserName: "chromium",
+        storageState: "playwright/.auth/standard-user.json",
+        viewport: { width: 1280, height: 720 },
+        deviceScaleFactor: 1,
+        locale: "en-US",
+        timezoneId: "UTC",
+      },
+      dependencies: ["setup"],
+      testMatch: /.*\.visual\.spec\.ts/,
+    },
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
